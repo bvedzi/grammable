@@ -72,7 +72,9 @@ gem 'simple_form'
 gem 'devise'
 
 
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
+  gem "factory_bot"
 end
 
