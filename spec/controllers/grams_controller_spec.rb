@@ -10,6 +10,13 @@ RSpec.describe GramsController, type: :controller do
       gram = Gram.find_by_id(gram.id)
       expect(gram).to eq nil
     end
+    it "should't allow users who didn't create the gram to destroy it" do
+      gram = FactoryBot.create(:gram)
+      user = FactoryBot.create(:user)
+      sign_in user
+      delete :destroy, params: { id: gram.id }
+      expect(response).to have_http_status(:forbidden)
+    end
 
     it "shouldn't let unauthenticated users destroy a gram" do
       gram = FactoryBot.create(:gram)
