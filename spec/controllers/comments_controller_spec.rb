@@ -1,9 +1,7 @@
 require 'rails_helper'
 
-
-
 RSpec.describe CommentsController, type: :controller do
-describe "comments#create action" do
+	describe "comments#create action" do
     it "should allow users to create comments on grams" do
       gram = FactoryBot.create(:gram)
 
@@ -30,4 +28,14 @@ describe "comments#create action" do
       post :create, params: { gram_id: 'YOLOSWAG', comment: { message: 'awesome gram' } }
       expect(response).to have_http_status :not_found
     end
+
+    it "should't allow users who didn't create the gram to destroy it" do
+    	gram = FactoryBot.create(:gram)
+    	user = FactoryBot.create(:user)
+    	sign_in user
+    	delete :destroy, params: { id: gram.id }
+    	expect(response).to have_http_status(:forbidden)
+    
+  	end
   end
+end
